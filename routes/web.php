@@ -11,10 +11,14 @@
 |
 */
 
+use Illuminate\Http\Request;
+
+
+
 $router->get('/', [
 	'middleware' => 'example:tt',
 	function () use ($router) {
-    return $router->app->version();
+        return $router->app->version();
 	}]);
 
 $router->post(
@@ -27,7 +31,7 @@ $router->post(
 $router->group(
     ['middleware' => [  
         'jwt.auth',  
-        'role:admin,teste,abc,def,ghi',
+        'role:user.list',
     ]], 
     function() use ($router) {
         $router->get('users', function() {
@@ -36,3 +40,12 @@ $router->group(
         });
     }
 );
+
+
+
+$router->get('/user-roles', [
+    'middleware' => 'jwt.auth',
+    function (Request $request) use ($router) {
+
+    return $request->auth->getRoleTags();
+}]);
