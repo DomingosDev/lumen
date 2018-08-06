@@ -9,10 +9,13 @@ class RoleMiddleware
 {
     public function handle($request, Closure $next) // ... roles
     {
+        
         $roles = array_slice( func_get_args(), 2 );
         
         $if_true = Closure::fromCallable( 'static::if_true' );
         $map_roles = static::map_roles( $request->auth );
+
+
 
         if( array_reduce( array_map( $map_roles, $roles ), $if_true, false) ) return $next($request);
         
