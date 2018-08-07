@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 
 
 
+
 $router->get('/', [
 	'middleware' => 'example:tt',
 	function () use ($router) {
@@ -25,6 +26,12 @@ $router->post(
     'auth/login', 
     [
        'uses' => 'AuthController@authenticate'
+    ]
+);
+$router->get(
+    'auth/login', 
+    [
+       'uses' => 'AuthController@getForm'
     ]
 );
 
@@ -48,4 +55,26 @@ $router->get('/user-roles', [
     function (Request $request) use ($router) {
 
     return $request->auth->getRoleTags();
+}]);
+
+
+$router->post('/validacao', [
+    function (Request $request) use ($router) {
+
+        $rules = [
+            'name' => 'required'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ( $validator->fails() ) {
+            $result = $validator->fails();
+            var_dump($result);
+            return $validator->errors();
+        }
+
+        
+
+
+    return 'OK';
 }]);
