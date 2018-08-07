@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class Example
+class Render
 {
     /**
      * Handle an incoming request.
@@ -13,9 +13,11 @@ class Example
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $teste)
+    public function handle($request, Closure $next)
     {
-        var_dump($teste);
+        $template = $request->route()[1]['template'];
+
+        var_dump( $template );
         return $next($request);
     }
 }

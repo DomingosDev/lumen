@@ -14,67 +14,66 @@
 use Illuminate\Http\Request;
 
 
+$url_register = function($router){
+    $router->get('/', [
+        'middleware' => 'example:tt',
+        function () use ($router) {
+            return $router->app->version();
+        }]);
 
-
-$router->get('/', [
-	'middleware' => 'example:tt',
-	function () use ($router) {
-        return $router->app->version();
-	}]);
-
-$router->post(
-    'auth/login', 
-    [
-       'uses' => 'AuthController@authenticate'
-    ]
-);
-$router->get(
-    'auth/login', 
-    [
-       'uses' => 'AuthController@getForm'
-    ]
-);
-
-$router->group(
-    ['middleware' => [  
-        'jwt.auth',  
-        'role:user.list',
-    ]], 
-    function() use ($router) {
-        $router->get('users', function() {
-            $users = \App\User::with('roles')->get();
-            return response()->json($users);
-        });
-    }
-);
-
-
-
-$router->get('/user-roles', [
-    'middleware' => 'jwt.auth',
-    function (Request $request) use ($router) {
-
-    return $request->auth->getRoleTags();
-}]);
-
-
-$router->post('/validacao', [
-    function (Request $request) use ($router) {
-
-        $rules = [
-            'name' => 'required'
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ( $validator->fails() ) {
-            $result = $validator->fails();
-            var_dump($result);
-            return $validator->errors();
+    $router->post(
+        'auth/login', 
+        [
+           'uses' => 'AuthController@authenticate'
+        ]
+    );
+    $router->get(
+        'auth/login', 
+        [
+           'uses' => 'AuthController@getForm'
+        ]
+    );
+    $router->group(
+        ['middleware' => [  
+            'jwt.auth',  
+            'role:user.list',
+        ]], 
+        function() use ($router) {
+            $router->get('users', function() {
+                $users = \App\User::with('roles')->get();
+                return response()->json($users);
+            });
         }
+    );
+    $router->get('/user-roles', [
+        'middleware' => 'jwt.auth',
+        function (Request $request) use ($router) {
 
-        
+        return $request->auth->getRoleTags();
+    }]);
+
+    $router->get('/teste', [ 'as' => 'teste123', 'template'=>'opalele', function(Request $request){
+        var_dump( $request->route()[1]['as'] );
+        return 'OK';
+    }]);
 
 
-    return 'OK';
-}]);
+    $router->post('/validacao', [
+        function (Request $request) use ($router) {
+
+            $rules = [ 'name' => 'required' ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ( $validator->fails() ) {
+                $result = $validator->fails();
+                var_dump($result);
+                return $validator->errors();
+            }
+        return 'OK';
+    }]);
+
+};
+
+$router->group(['prefix' => 'api'], $url_register );
+$router->group(['prefix' => '', 'middleware' => 'render'], $url_register );
