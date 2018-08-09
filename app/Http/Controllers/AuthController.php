@@ -38,7 +38,7 @@ class AuthController extends BaseController
         $validator = Validator::make( $request->all(), $rules );
         $validator->after( $this->getCustomValidator() );
 
-        if ( $validator->fails() ) return $this->getLoginForm( $request->all(), $validator->errors() );;
+        if ( $validator->fails() ) return $this->getLoginForm( $request->all(), $validator->errors() );
 
         return response()->json([ 'token' => $this->jwt($user) ], 200);
     }
@@ -61,14 +61,14 @@ class AuthController extends BaseController
             "message" => "",
             "fields" => [
                 [
-                    "type" => "email",
-                    "name" => "email",
+                    "type"  => "email",
+                    "name"  => "email",
                     "value" => $values['email'] ?? "",
                     "error" => $errors ? $errors->get('email') : false,
                 ],
                 [
-                    "type" => "password",
-                    "name" => "password",
+                    "type"  => "password",
+                    "name"  => "password",
                     "value" => $values['password'] ?? "",
                     "error" => $errors ? $errors->get('password') : false,
                 ]

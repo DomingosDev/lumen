@@ -21,18 +21,9 @@ $url_register = function($router){
             return $router->app->version();
         }]);
 
-    $router->post(
-        'auth/login', 
-        [
-           'uses' => 'AuthController@authenticate'
-        ]
-    );
-    $router->get(
-        'auth/login', 
-        [
-           'uses' => 'AuthController@getForm'
-        ]
-    );
+    $router->post( '/login',  [ 'uses' => 'AuthController@authenticate', 'template'=>'login.html' ] );
+    $router->get( '/login',   [ 'uses' => 'AuthController@getForm', 'template'=>'login.html' ] );
+
     $router->group(
         ['middleware' => [  
             'jwt.auth',  

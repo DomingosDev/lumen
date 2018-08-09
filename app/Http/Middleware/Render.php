@@ -15,8 +15,9 @@ class Render
      */
     public function handle($request, Closure $next)
     {
-        $template = $request->route()[1]['template'];
-
+        $route_params = $request->route()[1];
+        if( !isset($route_params['template']) ) return 'Template not defined for the requested route';
+        $template = $route_params['template'];
         var_dump( $template );
         return $next($request);
     }
