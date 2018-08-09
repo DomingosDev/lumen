@@ -16,9 +16,18 @@ use Illuminate\Http\Request;
 
 $url_register = function($router){
     $router->get('/', [
-        'middleware' => 'example:tt',
+        'template' => 'main.html',
         function () use ($router) {
-            return $router->app->version();
+            return [ 
+                "teste" => [
+                    "nome" => "alfafa"
+                ],
+                "fields" => [
+                    [ "type" => "text", "value" => "text2" ],
+                    [ "type" => "text", "value" => "text3" ],
+                    [ "type" => "text", "value" => "text4" ],
+                ]
+            ];
         }]);
 
     $router->post( '/login',  [ 'uses' => 'AuthController@authenticate', 'template'=>'login.html' ] );
