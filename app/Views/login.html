@@ -16,9 +16,7 @@
 <body>
     <section class="hero is-fullheight">
         <pre>
-            {{#fields}}
-                {{#te}}{{/te}}
-            {{/fields}}
+
         </pre>
         <div class="hero-body">
             <div class="container has-text-centered">
@@ -30,11 +28,8 @@
                             <img src="https://placehold.it/128x128">
                         </figure>
                         <form>
-                            <div class="field">
-                                <div class="control">
-                                    <input class="input is-large" type="email" placeholder="Your Email" autofocus="">
-                                </div>
-                            </div>
+                            
+                            {{{_field-email}}}
 
                             <div class="field">
                                 <div class="control">

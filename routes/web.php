@@ -18,14 +18,25 @@ $url_register = function($router){
     $router->get('/', [
         'template' => 'main.html',
         function () use ($router) {
-            return [ 
-                "teste" => [
-                    "nome" => "alfafa"
-                ],
-                "fields" => [
-                    [ "type" => "text", "value" => "text2" ],
-                    [ "type" => "text", "value" => "text3" ],
-                    [ "type" => "text", "value" => "text4" ],
+            return [
+            "message" => "",
+            "fields" => [
+                    [
+                        "type"  => "email",
+                        "name"  => "email",
+                        "placeholder" => "Your Email",
+                        "value" => "domingos.dev@gmail.com",
+                        "error" => [
+                            'Novo teste 123',
+                            'novo erro 123213'
+                        ],
+                    ],
+                    [
+                        "type"  => "password",
+                        "name"  => "password",
+                        "value" => "12345",
+                        "error" => false,
+                    ]
                 ]
             ];
         }]);
