@@ -22,7 +22,7 @@ class UI
 	  	$app = app();
 	  	$instance->m = new Mustache_Engine([ 
                                     'loader' => new Mustache_Loader_FilesystemLoader( $app->path() . '/Views', ['extension' => '.html']),
-                                    'partials_loader' => new Mustache_Loader_FilesystemLoader( $app->path() . '/Views/partials', ['extension' => '.html']),
+                                    'partials_loader' => new Mustache_Loader_FilesystemLoader( $app->path() . '/Views/UI', ['extension' => '.html']),
                                     'strict_callables' => true
                                 ]);
 	  } 
@@ -35,7 +35,11 @@ class UI
        		return $this->m->render( $template, $this );
        }
 
-	public function config($data){
+	public function config($data = null){
+		if( $data === null ) return;
+		if( gettype($data) == 'string' ){
+			$data = ['message'=>$data];
+		}
 		foreach($data as $key => $value){ $this->$key = $value; }
 
 		if( isset($data['fields']) ){
@@ -49,11 +53,6 @@ class UI
 
 			array_reduce( $data['fields'], $compileFields, $this );
 		}
-
-
-		$this->te = function($text, Mustache_LambdaHelper $helper){
-			return 'periquito';
-		};
 
 		return $this;
 	}

@@ -35,17 +35,17 @@ class AuthController extends BaseController
             'password'  => 'required'
         ];
 
+        $user = User::where('email', $this->request->input('email'))->first();
         $validator = Validator::make( $request->all(), $rules );
-        $validator->after( $this->getCustomValidator() );
+        $validator->after( $this->getCustomValidator( $user ) );
 
         if ( $validator->fails() ) return $this->getLoginForm( $request->all(), $validator->errors() );
 
         return response()->json([ 'token' => $this->jwt($user) ], 200);
     }
 
-    public function getCustomValidator(){
-        return function($validator){
-            $user = User::where('email', $this->request->input('email'))->first();
+    public function getCustomValidator($user){
+        return function($validator) use ($user){
             if (!$user) return $validator->errors()->add('email', 'Email does not exist.');
             if ( Hash::check($this->request->input('password'), $user->password) ) return;
             $validator->errors()->add('password', 'Password is wrong.');
@@ -71,6 +71,14 @@ class AuthController extends BaseController
                     "name"  => "password",
                     "value" => $values['password'] ?? "",
                     "error" => $errors ? $errors->get('password') : false,
+                ],
+                [
+                    "type"    => "checkbox",
+                    "name"    => "remember_me",
+                    "checked" => false,
+                    "label"   => "Remember me",
+                    "value" => $values['remember_me'] ?? "",
+                    "error" => $errors ? $errors->get('remember_me') : false,
                 ]
             ]
         ];

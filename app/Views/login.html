@@ -14,10 +14,8 @@
 </head>
 
 <body>
+    {{{message}}}
     <section class="hero is-fullheight">
-        <pre>
-
-        </pre>
         <div class="hero-body">
             <div class="container has-text-centered">
                 <div class="column is-4 is-offset-4">
@@ -27,29 +25,20 @@
                         <figure class="avatar">
                             <img src="https://placehold.it/128x128">
                         </figure>
-                        <form>
-                            
+                        <form method="post" action="api/login">
                             {{{_field-email}}}
-
-                            <div class="field">
-                                <div class="control">
-                                    <input class="input is-large" type="password" placeholder="Your Password">
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label class="checkbox">
-                  <input type="checkbox">
-                  Remember me
-                </label>
-                            </div>
+                            {{{_field-password}}}
+                            {{{_field-remember_me}}}
                             <button class="button is-block is-info is-large is-fullwidth">Login</button>
                         </form>
                     </div>
-                    <p class="has-text-grey">
-                        <a href="../">Sign Up</a> &nbsp;·&nbsp;
-                        <a href="../">Forgot Password</a> &nbsp;·&nbsp;
-                        <a href="../">Need Help?</a>
-                    </p>
+                    <!--
+                        <p class="has-text-grey">
+                            <a href="../">Sign Up</a> &nbsp;·&nbsp;
+                            <a href="../">Forgot Password</a> &nbsp;·&nbsp;
+                            <a href="../">Need Help?</a>
+                        </p>
+                    -->
                 </div>
             </div>
         </div>

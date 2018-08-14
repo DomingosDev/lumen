@@ -36,6 +36,13 @@ $url_register = function($router){
                         "name"  => "password",
                         "value" => "12345",
                         "error" => false,
+                    ],
+                    [
+                        "type"    => "checkbox",
+                        "name"    => "remember",
+                        "error"   => false,
+                        "checked" => false,
+                        "label"   => "Remember me"
                     ]
                 ]
             ];
