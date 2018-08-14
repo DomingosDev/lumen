@@ -47,6 +47,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         if( !empty($this->role_tags) && !$refresh) return $this->role_tags;
 
         $roles = $this->roles->toArray();
+        if( !$this->group || count( $this->group->toArray() ) == 0 ) return $roles;
         $group_roles = $this->group->roles->toArray();
         $getRoleTag = function ( $element ) { return $element['tag']; };
         $this->role_tags = array_merge( array_map(  $getRoleTag, $roles ), array_map(  $getRoleTag, $group_roles ));
@@ -55,7 +56,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
     public function getRedirectRoute(){
-        return '/dashboard';
+        return '/users';
     }   
 
     public function can( $ability, $arguments = [] )

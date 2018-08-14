@@ -18,12 +18,10 @@ $url_register = function($router){
 
     $router->post( '/login',  [ 'uses' => 'AuthController@authenticate', 'template'=>'login.html' ] );
     $router->get( '/login',   [ 'uses' => 'AuthController@getForm', 'template'=>'login.html' ] );
+    $router->get( 'users', ['uses' => 'UserController@listUsers' , 'middleware' => ['jwt.auth', 'role:user.list'], 'template' => "listagem-usuarios.html"  ] );
 
-    $router->group(
-        ['middleware' => [  
-            'jwt.auth',  
-            'role:user.list',
-        ]], 
+    /*$router->group(
+        ['middleware' => ['jwt.auth', 'role:user.list']], 
         function() use ($router) {
             $router->get('users', function() {
                 $users = \App\User::with('roles')->get();
@@ -31,6 +29,7 @@ $url_register = function($router){
             });
         }
     );
+    */
 
     $router->get('/user-roles', [
         'middleware' => 'jwt.auth',

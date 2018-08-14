@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 use Symfony\Component\HttpFoundation\Response;
+use \Symfony\Component\HttpFoundation\Cookie;
 use App\Helpers\UI;
 use Closure;
 
@@ -23,7 +24,8 @@ class Render
 
         $data =  $next($request);
 
-        if( isset( $data->original['redirect'] ) ) return redirect( $data->original['redirect'] );
+        if( isset( $data->original['redirect'] ) && isset( $data->original['token'] ) ) return redirect( $data->original['redirect'] )->withCookie(new Cookie('token', $data->original['token']) );
+        if( isset( $data->original['redirect'] ) )return redirect( $data->original['redirect'] )->withCookie();
 
         return UI::getInstance()->config( $data->original )->render( $route_params['template'] );
     }
