@@ -8,6 +8,7 @@ use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Firebase\JWT\ExpiredException;
 use Illuminate\Support\Facades\Hash;
+use \Symfony\Component\HttpFoundation\Cookie;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 class AuthController extends BaseController 
@@ -41,7 +42,11 @@ class AuthController extends BaseController
 
         if ( $validator->fails() ) return $this->getLoginForm( $request->all(), $validator->errors() );
 
-        return response()->json([ 'token' => $this->jwt($user) ], 200);
+        $token = $this->jwt($user);
+
+        return response()
+                    ->json([ 'token' => $token, 'redirect' => $user->getRedirectRoute() ], 200)
+                    ->withCookie( new Cookie('token', $token) );
     }
 
     public function getCustomValidator($user){

@@ -54,6 +54,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     }
 
+    public function getRedirectRoute(){
+        return '/dashboard';
+    }   
+
     public function can( $ability, $arguments = [] )
     {
         return in_array( $ability, $this->getRoleTags() );

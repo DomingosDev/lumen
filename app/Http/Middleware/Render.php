@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
+use Symfony\Component\HttpFoundation\Response;
 use App\Helpers\UI;
 use Closure;
 
@@ -21,7 +22,9 @@ class Render
         $template = $route_params['template'];
 
         $data =  $next($request);
-       return UI::getInstance()->config($data->original)->render('login');
-        
+
+        if( isset( $data->original['redirect'] ) ) return redirect( $data->original['redirect'] );
+
+        return UI::getInstance()->config( $data->original )->render( $route_params['template'] );
     }
 }

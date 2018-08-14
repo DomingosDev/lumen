@@ -15,38 +15,6 @@ use Illuminate\Http\Request;
 
 
 $url_register = function($router){
-    $router->get('/', [
-        'template' => 'main.html',
-        function () use ($router) {
-            return [
-            "message" => "",
-            "fields" => [
-                    [
-                        "type"  => "email",
-                        "name"  => "email",
-                        "placeholder" => "Your Email",
-                        "value" => "domingos.dev@gmail.com",
-                        "error" => [
-                            'Novo teste 123',
-                            'novo erro 123213'
-                        ],
-                    ],
-                    [
-                        "type"  => "password",
-                        "name"  => "password",
-                        "value" => "12345",
-                        "error" => false,
-                    ],
-                    [
-                        "type"    => "checkbox",
-                        "name"    => "remember",
-                        "error"   => false,
-                        "checked" => false,
-                        "label"   => "Remember me"
-                    ]
-                ]
-            ];
-        }]);
 
     $router->post( '/login',  [ 'uses' => 'AuthController@authenticate', 'template'=>'login.html' ] );
     $router->get( '/login',   [ 'uses' => 'AuthController@getForm', 'template'=>'login.html' ] );
@@ -63,12 +31,18 @@ $url_register = function($router){
             });
         }
     );
+
     $router->get('/user-roles', [
         'middleware' => 'jwt.auth',
         function (Request $request) use ($router) {
-
         return $request->auth->getRoleTags();
     }]);
+
+    $router->get('/dashboard', [
+        'middleware' => 'jwt.auth',
+        'template' => "dashboard",
+        function (Request $request) use ($router) { return [ "tags" =>  $request->auth->getRoleTags() ];}
+    ]);
 
     $router->get('/teste', [ 'as' => 'teste123', 'template'=>'opalele', function(Request $request){
         var_dump( $request->route()[1]['as'] );
