@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login - Free Bulma template</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <!-- Bulma Version 0.7.1-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/login.css">
+</head>
+
+<body>
+    <section class="hero is-fullheight">
+        <div class="hero-body">
+            <div class="container">
+
+                <div class="card events-card">
+                    <header class="card-header">
+                        <p class="card-header-title"> Novo Usuário </p>
+                    </header>
+                    <div class="card-table">
+                        <div class="content">
+                            <form action="" method="POST">
+                                {{{_field-name}}}
+                                {{{_field-email}}}
+                                {{{_field-password}}}
+                                {{{_field-password-confirm}}}
+                            </form>
+                        </div>
+                    </div>
+                    <footer class="card-footer">
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{users}}
+</body>
+
+</html>
+

@@ -18,7 +18,11 @@ $url_register = function($router){
 
     $router->post( '/login',  [ 'uses' => 'AuthController@authenticate', 'template'=>'login.html' ] );
     $router->get( '/login',   [ 'uses' => 'AuthController@getForm', 'template'=>'login.html' ] );
-    $router->get( 'users', ['uses' => 'UserController@listUsers' , 'middleware' => ['jwt.auth', 'role:user.list'], 'template' => "listagem-usuarios.html"  ] );
+
+    $router->get( 'usuarios', ['uses' => 'UserController@listUsers' , 'middleware' => ['jwt.auth', 'role:user.list'], 'template' => "listagem-usuarios.html"  ] );
+
+    $router->get(  'novo-usuario', ['uses' => 'UserController@newUser' , 'middleware' => ['jwt.auth', 'role:user.add'], 'template' => "novo-usuario.html"  ] );
+    $router->post( 'novo-usuario', ['uses' => 'UserController@newUser' , 'middleware' => ['jwt.auth', 'role:user.add'], 'template' => "novo-usuario.html"  ] );
 
     /*$router->group(
         ['middleware' => ['jwt.auth', 'role:user.list']], 
